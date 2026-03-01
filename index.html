@@ -32,6 +32,25 @@ font-size:42px;
 margin-bottom:10px;
 }
 
+/* START BUTTON */
+#startBtn{
+padding:14px 30px;
+font-size:18px;
+border:none;
+border-radius:30px;
+background:#ff4d6d;
+color:white;
+cursor:pointer;
+margin-top:20px;
+transition:0.3s;
+box-shadow:0 5px 15px rgba(0,0,0,0.4);
+}
+
+#startBtn:hover{
+transform:scale(1.1);
+background:#ff2e63;
+}
+
 /* SECTION */
 .section{
 padding:40px 20px;
@@ -87,7 +106,7 @@ line-height:1.6;
 
 <body>
 
-<!-- Romantic Background Music -->
+<!-- Background Music -->
 <audio id="bgm" loop>
 <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_5e3c3b8d1a.mp3?filename=romantic-background-112191.mp3" type="audio/mp3">
 </audio>
@@ -96,6 +115,11 @@ line-height:1.6;
 <h1>✨ Happy 25th Wedding Anniversary ✨</h1>
 <h2>Dear Mom ❤️ Dad</h2>
 <p>Celebrating 25 Beautiful Years of Love & Togetherness</p>
+
+<button id="startBtn" onclick="startCelebration()">
+💖 Start Celebration 💖
+</button>
+
 </header>
 
 <div class="section">
@@ -135,12 +159,20 @@ Thank you for building a life filled with happiness and warmth.<br><br>
 
 <script>
 
-/* MUSIC START AFTER FIRST TOUCH */
-window.addEventListener("click",()=>{
-document.getElementById("bgm").play();
-},{once:true});
+let heartInterval=null;
 
-/* FALLING HEARTS ANIMATION */
+function startCelebration(){
+
+// play music
+document.getElementById("bgm").play();
+
+// hide button
+document.getElementById("startBtn").style.display="none";
+
+// start hearts animation
+heartInterval=setInterval(createHeart,300);
+}
+
 function createHeart(){
 
 const heart=document.createElement("div");
@@ -153,10 +185,10 @@ heart.style.animationDuration=(3+Math.random()*5)+"s";
 
 document.body.appendChild(heart);
 
-setTimeout(()=>heart.remove(),8000);
+setTimeout(()=>{
+heart.remove();
+},8000);
 }
-
-setInterval(createHeart,300);
 
 </script>
 
