@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Happy 25th Anniversary ❤️</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&family=Playfair+Display:wght@600&display=swap" rel="stylesheet">
+
+<style>
+
+body{
+margin:0;
+font-family:Poppins;
+background:linear-gradient(135deg,#1c1c1c,#3a2f2f);
+color:white;
+text-align:center;
+overflow-x:hidden;
+}
+
+/* HEADER */
+header{
+padding:60px 20px;
+background:linear-gradient(45deg,#d4af37,#f5deb3);
+color:black;
+}
+
+header h1{
+font-family:'Playfair Display';
+font-size:42px;
+margin-bottom:10px;
+}
+
+/* SECTION */
+.section{
+padding:40px 20px;
+}
+
+/* PHOTO CARDS */
+.memory{
+background:#ffffff10;
+margin:25px auto;
+padding:15px;
+border-radius:20px;
+width:90%;
+max-width:700px;
+backdrop-filter:blur(10px);
+box-shadow:0 10px 30px rgba(0,0,0,0.5);
+transition:0.5s;
+}
+
+.memory:hover{
+transform:scale(1.03);
+}
+
+.memory img{
+width:100%;
+border-radius:15px;
+}
+
+/* FALLING HEARTS */
+.heart{
+position:fixed;
+top:-10px;
+animation:fall linear forwards;
+z-index:999;
+}
+
+@keyframes fall{
+to{
+transform:translateY(110vh);
+opacity:0;
+}
+}
+
+footer{
+padding:35px;
+background:#000;
+font-size:18px;
+}
+
+input{
+margin-top:15px;
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- 🎵 Romantic Background Music -->
+<audio id="bgm" loop>
+<source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_5e3c3b8d1a.mp3?filename=romantic-background-112191.mp3" type="audio/mp3">
+</audio>
+
+<header>
+<h1>✨ Happy 25th Wedding Anniversary ✨</h1>
+<h2>Dear Mom ❤️ Dad</h2>
+<p>Celebrating 25 Beautiful Years of Love & Togetherness</p>
+</header>
+
+<div class="section">
+
+<h2>Our Beautiful Memories 📸</h2>
+
+<div id="memories"></div>
+
+<h3>Add / Change Photos</h3>
+<input type="file" multiple accept="image/*" onchange="addPhotos(event)">
+
+</div>
+
+<footer>
+<p>
+25 years of love, care, sacrifices and happiness.<br><br>
+Your journey together is our greatest inspiration.<br>
+Thank you for building a life filled with warmth and love.<br><br>
+❤️ Forever Grateful ❤️
+</p>
+</footer>
+
+<script>
+
+/* ---------- MUSIC AUTOPLAY ---------- */
+window.addEventListener("click",()=>{
+document.getElementById("bgm").play();
+},{once:true});
+
+
+/* ---------- FALLING HEARTS ---------- */
+function createHeart(){
+
+const heart=document.createElement("div");
+heart.classList.add("heart");
+heart.innerHTML="❤️";
+
+heart.style.left=Math.random()*100+"vw";
+heart.style.fontSize=(15+Math.random()*25)+"px";
+heart.style.animationDuration=(3+Math.random()*5)+"s";
+
+document.body.appendChild(heart);
+
+setTimeout(()=>heart.remove(),8000);
+}
+
+setInterval(createHeart,300);
+
+
+/* ---------- PHOTO STORAGE SYSTEM ---------- */
+
+let memoriesDiv=document.getElementById("memories");
+
+function loadSaved(){
+let data=JSON.parse(localStorage.getItem("memories"))||[];
+data.forEach(item=>createMemory(item.src));
+}
+
+function createMemory(src){
+
+let div=document.createElement("div");
+div.className="memory";
+
+div.innerHTML=`<img src="${src}">`;
+
+memoriesDiv.appendChild(div);
+}
+
+function addPhotos(event){
+
+let files=event.target.files;
+let stored=[];
+
+for(let file of files){
+
+let reader=new FileReader();
+
+reader.onload=function(e){
+
+stored.push({
+src:e.target.result
+});
+
+localStorage.setItem("memories",JSON.stringify(stored));
+
+memoriesDiv.innerHTML="";
+loadSaved();
+};
+
+reader.readAsDataURL(file);
+}
+}
+
+loadSaved();
+
+</script>
+
+</body>
+</html>
