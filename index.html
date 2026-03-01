@@ -21,7 +21,7 @@ overflow-x:hidden;
 
 /* HEADER */
 header{
-padding:60px 20px;
+padding:70px 20px;
 background:linear-gradient(45deg,#d4af37,#f5deb3);
 color:black;
 }
@@ -37,21 +37,21 @@ margin-bottom:10px;
 padding:40px 20px;
 }
 
-/* PHOTO CARDS */
+/* IMAGE CARDS */
 .memory{
 background:#ffffff10;
-margin:25px auto;
+margin:30px auto;
 padding:15px;
 border-radius:20px;
 width:90%;
-max-width:700px;
+max-width:750px;
 backdrop-filter:blur(10px);
-box-shadow:0 10px 30px rgba(0,0,0,0.5);
+box-shadow:0 10px 30px rgba(0,0,0,0.6);
 transition:0.5s;
 }
 
 .memory:hover{
-transform:scale(1.03);
+transform:scale(1.04);
 }
 
 .memory img{
@@ -74,14 +74,12 @@ opacity:0;
 }
 }
 
+/* FOOTER */
 footer{
 padding:35px;
 background:#000;
 font-size:18px;
-}
-
-input{
-margin-top:15px;
+line-height:1.6;
 }
 
 </style>
@@ -89,7 +87,7 @@ margin-top:15px;
 
 <body>
 
-<!-- 🎵 Romantic Background Music -->
+<!-- Romantic Background Music -->
 <audio id="bgm" loop>
 <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_5e3c3b8d1a.mp3?filename=romantic-background-112191.mp3" type="audio/mp3">
 </audio>
@@ -102,33 +100,47 @@ margin-top:15px;
 
 <div class="section">
 
-<h2>Our Beautiful Memories 📸</h2>
+<h2>Our Beautiful Journey 📸</h2>
 
-<div id="memories"></div>
+<div class="memory">
+<img src="photo1.jpg">
+</div>
 
-<h3>Add / Change Photos</h3>
-<input type="file" multiple accept="image/*" onchange="addPhotos(event)">
+<div class="memory">
+<img src="photo2.jpg">
+</div>
+
+<div class="memory">
+<img src="photo3.jpg">
+</div>
+
+<div class="memory">
+<img src="photo4.jpg">
+</div>
+
+<div class="memory">
+<img src="photo5.jpg">
+</div>
 
 </div>
 
 <footer>
 <p>
-25 years of love, care, sacrifices and happiness.<br><br>
+25 years of love, care and endless sacrifices.<br><br>
 Your journey together is our greatest inspiration.<br>
-Thank you for building a life filled with warmth and love.<br><br>
+Thank you for building a life filled with happiness and warmth.<br><br>
 ❤️ Forever Grateful ❤️
 </p>
 </footer>
 
 <script>
 
-/* ---------- MUSIC AUTOPLAY ---------- */
+/* MUSIC START AFTER FIRST TOUCH */
 window.addEventListener("click",()=>{
 document.getElementById("bgm").play();
 },{once:true});
 
-
-/* ---------- FALLING HEARTS ---------- */
+/* FALLING HEARTS ANIMATION */
 function createHeart(){
 
 const heart=document.createElement("div");
@@ -145,53 +157,6 @@ setTimeout(()=>heart.remove(),8000);
 }
 
 setInterval(createHeart,300);
-
-
-/* ---------- PHOTO STORAGE SYSTEM ---------- */
-
-let memoriesDiv=document.getElementById("memories");
-
-function loadSaved(){
-let data=JSON.parse(localStorage.getItem("memories"))||[];
-data.forEach(item=>createMemory(item.src));
-}
-
-function createMemory(src){
-
-let div=document.createElement("div");
-div.className="memory";
-
-div.innerHTML=`<img src="${src}">`;
-
-memoriesDiv.appendChild(div);
-}
-
-function addPhotos(event){
-
-let files=event.target.files;
-let stored=[];
-
-for(let file of files){
-
-let reader=new FileReader();
-
-reader.onload=function(e){
-
-stored.push({
-src:e.target.result
-});
-
-localStorage.setItem("memories",JSON.stringify(stored));
-
-memoriesDiv.innerHTML="";
-loadSaved();
-};
-
-reader.readAsDataURL(file);
-}
-}
-
-loadSaved();
 
 </script>
 
