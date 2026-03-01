@@ -107,8 +107,8 @@ line-height:1.6;
 <body>
 
 <!-- Background Music -->
-<audio id="bgm" loop>
-<source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_5e3c3b8d1a.mp3?filename=romantic-background-112191.mp3" type="audio/mp3">
+<audio id="bgm" preload="auto" loop>
+<source src="music.mp3" type="audio/mpeg">
 </audio>
 
 <header>
@@ -163,13 +163,22 @@ let heartInterval=null;
 
 function startCelebration(){
 
-// play music
-document.getElementById("bgm").play();
+const music=document.getElementById("bgm");
+
+music.volume=0.6;
+
+music.play()
+.then(()=>{
+console.log("Music started");
+})
+.catch(err=>{
+console.log("Playback blocked:",err);
+});
 
 // hide button
 document.getElementById("startBtn").style.display="none";
 
-// start hearts animation
+// start hearts
 heartInterval=setInterval(createHeart,300);
 }
 
@@ -194,3 +203,4 @@ heart.remove();
 
 </body>
 </html>
+
